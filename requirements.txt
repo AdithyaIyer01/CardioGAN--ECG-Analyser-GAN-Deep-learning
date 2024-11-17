@@ -1,0 +1,11 @@
+Flask==3.0.2
+tensorflow==2.16.1
+numpy==1.26.4
+Pillow==10.3.0
+scikit-learn==1.4.2
+matplotlib==3.8.4
+opencv-python==4.9.0.80
+tqdm==4.66.2
+Flask-Cors==4.0.1
+Flask-SQLAlchemy==3.1.1
+h5py==3.10.0

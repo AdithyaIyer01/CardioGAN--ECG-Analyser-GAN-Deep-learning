@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>CardioGAN</title>
+   {% set background_url = url_for('static', filename='back3.jpeg') %}
+   <style>
+       @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-padding-top: 2rem;
+    scroll-behavior: smooth;
+    list-style: none;
+    text-decoration: none;
+    font-family: "Poppins",sans-serif;
+}
+:root{
+    --main-color: #2568FB;
+    --second-color:#11ABC1;
+    --text-color:#444;
+    --gradient: linear-gradient(#2568FB,#11ABC1);
+
+}
+html::-webkit-scrollbar{
+    width: 0.5rem;
+}
+html::-webkit-scrollbar-track{
+    background: transparent;
+}
+html::-webkit-scrollbar-thumb{
+    background: var(--second-color);
+    border-radius: 5rem;
+}
+section{
+    padding: 50px 100px;
+}
+header {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-around; /* Changed from space-around to space-between for better spacing */
+    background: #eeeff1;
+    padding: 12px 60px;
+    font-weight: 600;
+}
+
+.logo-and-title {
+    display: flex;
+    align-items: center; /* Aligns CardioGAN text with the logo */
+}
+
+.logo-and-title img {
+    width: 50px;
+    margin-right: 10px; /* Adjusted margin for better spacing */
+}
+
+.logo-and-title p {
+    margin-left: 10px; /* Adds a little bit of spacing between the logo and CardioGAN text */
+    font-size: 1.35rem;
+    color:#2568FB;
+}
+
+.navbar .navhome,
+.navbar .navabout,
+.navbar .navreviews {
+    color: #444;
+}
+
+.navbar-items a.sign-in {
+    color: white;
+}
+
+.navbar-items a.sign-in:hover {
+    background: linear-gradient(#2568FB,#11ABC1);
+    color: white; /* Ensure text color remains white on hover */
+}
+.navbar-items {
+    display: flex;
+}
+
+.navbar-items a {
+    margin-left: 30px;
+    font-size: 1.15rem;
+    padding: 10px 20px; 
+    position: relative;
+}
+
+.navbar a::after {
+    content: "";
+    width: 0;
+    height: 3px;
+    background: linear-gradient(#2568FB, #11ABC1);
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    transition: 0.5s;
+    opacity: 0; 
+}
+
+.navbar a:hover::after {
+    width: 100%;
+    opacity: 1; /* Show the line on hover */
+}
+
+.navbar-items a.sign-in:hover::after {
+    width: 0; /* Set the width to zero for the "Upload" button */
+    opacity: 0; /* Hide the line for the "Upload" button */
+}
+
+.sign-in {
+    background-color: #2568FB;
+    color: white; /* Changed text color to white as requested */
+    border-radius: 0.5rem; /* Corrected typo from 're' to 'rem' */
+    margin-left: 20px; /* Added spacing between Upload button and other navbar items */
+}
+
+.sign-in:hover {
+    background: linear-gradient(#2568FB,#11ABC1);
+}
+
+.home {
+    width: 100%;
+    min-height: 100vh;
+    position: relative;
+    background-image: url('{{ background_url }}');
+    background-size: contain; /* Adjust background size to contain the entire image */
+    background-position: calc(100% - 28px) calc(100% - -30px); /* Move the image slightly towards the left and down */
+    background-repeat: no-repeat; /* Prevent background image from repeating */
+    display: grid;
+    align-items: center;
+    grid-template-columns: repeat(2, 2fr);
+    transform: translateX(-15px);
+}
+
+
+
+
+
+        .text h1 {
+            font-size: 3.65rem;
+            letter-spacing: 2px;
+        }
+
+        .text span {
+            color: var(--main-color);
+        }
+
+        .text p {
+            font-size: 1.25rem;
+            margin: 2rem 2 1rem;
+        }
+
+        .heading {
+            text-align: center;
+        }
+
+        .heading span {
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        .heading h1 {
+            font-size: 2rem;
+        }
+
+        .upload-box {
+    display: block;
+    align-items: center;
+    justify-content: center;
+    transform: translateX(-520px);
+    position: relative;
+    top: 160px;
+}
+
+.upload-box label {
+    font-size: 24px; /* Adjust the font size as needed */
+    font-weight: bold; /* Adjust the font weight as needed */
+}
+
+#ecg-upload {
+    display: none;
+}
+
+label[for="ecg-upload"] {
+    cursor: pointer;
+    padding: 14px 60px;
+    background-color: #2568FB;
+    color: #ffffff;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    font-size: 22px; /* Adjust the font size as needed */
+    font-weight: 600; /* Adjust the font weight as needed */
+}
+
+label[for="ecg-upload"]:hover {
+    background:linear-gradient(#2568FB,#11ABC1);
+}
+
+.about-container {
+         display: grid;
+         grid-template-columns: repeat(3, 1fr);
+         gap: 1rem;
+         margin-top: 2rem;
+         align-items: center;
+      }
+
+      .about-container .box {
+         text-align: center;
+         padding: 20px;
+         box-shadow: 1px 4px 41px rgba(0,0,0,0.1);
+         border-radius: 0.5rem;
+      }
+
+      .about-container .box img {
+         width: 70px; /* Set the size of the images to 70px */
+         height: 70px;
+         border-radius: 50%; /* Optional: Add border-radius to images */
+      }
+
+.reviews-container{
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(250px,auto));
+    gap: 1rem;
+    margin-top: 2rem;
+}
+.rev-img{
+    width: 70px;
+    height: 70px;
+}
+.rev-img img{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+    border: 2px solid var(--second-color);
+}
+.reviews-container .box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    box-shadow: 1px 4px 41px rgba(0,0,0,0.1);
+    border-radius: 0.5rem;
+}
+.reviews-container .box h2{
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0.5rem 0 0.5rem;
+}
+.reviews-container .box p{
+    font-style: italic;
+}
+.centered-text {
+            text-align: center;
+        }
+.result {
+          display: none;
+      }
+
+      .image-and-prediction {
+          text-align: center;
+      }
+      .uploaded-image-container {
+    max-width: 63%; /* Increase the maximum width of the image container */
+    margin: 0 auto; /* Center the image container */
+    height: auto; /* Let the height adjust automatically based on the image width */
+    overflow: hidden;
+}
+
+/* Apply rotation if the image is vertically oriented */
+.uploaded-image-container img {
+    width: 100%; /* Set the width of the image to fill the container */
+    height: auto; /* Let the height adjust automatically based on the image width */
+    display: block; /* Ensure the image is displayed as a block element */
+    margin: 0 auto; /* Center the image horizontally within the container */
+}
+
+
+    /* Apply rotation to vertically oriented images */
+    .uploaded-image-container img[orientation="90"] {
+        transform: rotate(90deg); /* Rotate 90 degrees clockwise */
+    }
+
+    .uploaded-image-container img[orientation="270"] {
+        transform: rotate(-90deg); /* Rotate 90 degrees counterclockwise */
+    }
+        
+
+      .buttons {
+          text-align: center;
+          margin-top: 10px; /* Adjust as needed */
+      }
+
+      #analyzeButton {
+          background-color: #2568FB;
+          color: white;
+          border-radius: 0.5rem;
+          padding: 13px 60px;
+          cursor: pointer;
+          transition: background-color 0.3s;
+          font-size: 1.2rem;
+          font-weight: 700;
+          border: none;
+      }
+
+      #analyzeButton:hover {
+          background: linear-gradient(#2568FB,#11ABC1);
+      }
+   </style>
+   
+</head>
+
+<body>
+    
+    <header class="navbar">
+        <div class="logo-and-title">
+            <img src="{{ url_for('static', filename='heartbeat_12833377.png') }}" alt="Logo">
+            <p>CardioGAN</p>
+        </div>
+        <div class="navbar-items" id="navbar">
+            <a href="#home" class="navhome">Home</a>
+            <a href="#about" class="navabout">About</a>
+            <a href="#reviews" class="navreviews">Reviews</a>
+            <a href="#" class="sign-in" id="uploadButton">Upload</a>
+            <input type="file" style="display: none;">
+        </div>
+        
+    </header>
+    <section class="home" id="home">
+        <div class="text">
+            <h1><span>Track </span>your <br>Heartbeat <span>cycle</span></h1>
+            <p>Understand and <span>analyze </span> your heart rhythms</p>
+            <p> &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp; accurately and easily.</p>
+        </div>
+        <!-- Adding a small box for ECG image upload -->
+        <div class="upload-box">
+            <input type="file" id="ecg-upload">
+            <label for="ecg-upload">Upload your ECG image</label>
+        </div>
+        
+       </section>
+       <section class="result" id="result">
+        <!-- Display uploaded image and prediction -->
+        <div class="image-and-prediction">
+            <div class="uploaded-image-container">
+                <img id="uploadedImage" src="" alt="Uploaded Image" style="max-width: 100%; height: auto;">
+            </div>
+            <div class="prediction" style="display: none;">
+                <h2>Classification: <span id="classification"></span></h2>
+                <!-- Define all link containers initially with display: none -->
+                <div class="link-container" id="miLinkContainer" style="display: none;">
+                    <a href="https://www.physio-pedia.com/Myocardial_Infarction" target="_blank">Click here for more information about Myocardial Infarction (MI)</a>
+                </div>
+                <div class="link-container" id="abnormalLinkContainer" style="display: none;">
+                    <a href="https://www.hriuk.org/health/learn/cardiovascular-disease/irregular-heartbeat-symptoms-and-causes" target="_blank">Click here for more information about irregular heartbeats</a>
+                </div>
+                <div class="link-container" id="normalLinkContainer" style="display: none;">
+                    <a href="https://www.mayoclinic.org/diseases-conditions/heart-disease/in-depth/heart-disease-prevention/art-20046502" target="_blank">Click here for more information about maintaining heart health</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Button for analysis -->
+        <div class="buttons">
+            <button id="analyzeButton">Analyze</button>
+        </div>
+    </section>      
+    
+<section id="about">
+    <div class="heading">
+      <span>How It Works</span>
+      <h1>Track Your Heartbeat in 3 Simple Steps</h1>
+    </div>
+    <div class="about-container">
+  
+      <div class="box">
+        <img src="{{ url_for('static', filename='image.png') }}">
+        <h2>Upload </h2>
+        <p>Upload your ECG image <br> for analysis(only .jpg and .jpeg)</p>
+      </div>
+  
+      <div class="box">
+        <img src="{{ url_for('static', filename='magnifying-glass - Copy.png') }}">
+        <h2>Analyze</h2>
+        <p>CardioGan will analyze <br> your ECG data.</p>
+      </div>
+  
+      <div class="box">
+        <img src="{{ url_for('static', filename='download.png') }}">
+        <h2>Visualize </h2>
+        <p>Visualize the output <br> of your ECG image</p>
+      </div>
+  
+    </div>
+  </section>
+  
+
+    <section class="reviews" id="reviews">
+        <div class="heading">
+          <span>Reviews</span>
+          <h1>What Our Users Say</h1>
+        </div>
+        <div class="reviews-container">
+          <div class="box">
+            <div class="rev-img">
+              <img src="{{ url_for('static', filename='rev1.jpg') }}" alt="">
+            </div>
+            <h2>John Smith</h2>
+            <p>"Using CardioGan has revolutionized how I monitor my heart health. Uploading my ECG images allows me to track my heartbeat accurately, and the detailed analysis provided by the platform gives me valuable insights into my cardiovascular well-being."</p>
+          </div>
+      
+          <div class="box">
+            <div class="rev-img">
+              <img src="{{ url_for('static', filename='rev3.jpg') }}" alt="">
+            </div>
+            <h2>Lisa Johnson</h2>
+            <p>"CardioGan is a game-changer for anyone serious about their heart health. It not only analyzes my ECG uploads but also provides personalized recommendations to improve my cardiovascular fitness. It's user-friendly, visually appealing, and an essential tool for proactive heart care."</p>
+          </div>
+      
+          <div class="box">
+            <div class="rev-img">
+              <img src="{{ url_for('static', filename='rev2.jpg') }}" alt="">
+            </div>
+            <h2>Michael Brown</h2>
+            <p>"I've tried several methods for tracking my heartbeat, but CardioGan stands out for its accuracy and convenience. The platform's insightful analysis of my ECG images has helped me better understand my heart rhythms and make informed decisions about my cardiovascular health."</p>
+          </div>
+        </div>
+      </section>
+      
+      <script>
+        document.getElementById('uploadButton').addEventListener('click', function() {
+            document.getElementById('ecg-upload').click();
+            
+        });
+    
+        document.getElementById('ecg-upload').addEventListener('change', function() {
+            var file = this.files[0];
+    
+            // Check file type
+            if (!isValidFileType(file)) {
+                alert("Please upload a valid ECG image (JPEG format).");
+                return;
+            }
+    
+            // Display the uploaded image on the page
+            displayImage(file);
+            
+        });
+    
+        function isValidFileType(file) {
+            var fileType = file.type;
+            return fileType === 'image/jpeg' || fileType === 'image/jpg';
+        }
+    
+        function changeNavbarLink() {
+            var aboutLink = document.querySelector('.navabout');
+            if (aboutLink) {
+                aboutLink.textContent = 'Result';
+                aboutLink.href = '#result'; // Optionally, you can set the href attribute to scroll to the result section
+            } else {
+                console.error("About link not found in the navbar.");
+            }
+        }
+    
+        function displayImage(file) {
+    var reader = new FileReader();
+    reader.onload = function(event) {
+        // Display the uploaded image
+        var uploadedImage = document.getElementById('uploadedImage');
+        uploadedImage.src = event.target.result;
+
+        // Hide the prediction container initially
+        var predictionContainer = document.querySelector('.prediction');
+        predictionContainer.style.display = 'none';
+
+        // Clear the classification content
+        var classificationElement = document.getElementById('classification');
+        classificationElement.textContent = '';
+
+        // Clear all existing link containers
+        var linkContainers = document.querySelectorAll('.link-container');
+        linkContainers.forEach(container => {
+            container.style.display = 'none'; // Hide all link containers
+        });
+
+        // Display the result section and hide other sections
+        document.getElementById('result').style.display = 'block';
+        document.getElementById('about').style.display = 'none';
+
+        // Show alert dialog with "OK" button
+        alert("Image uploaded successfully. Click OK to view the result.");
+
+        // Scroll to the result section if it exists
+        var resultSection = document.getElementById('result');
+        if (resultSection) {
+            resultSection.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            console.error("Result section not found.");
+        }
+
+        // Update the navbar link
+        changeNavbarLink();
+    };
+    reader.readAsDataURL(file);
+}
+
+    
+        document.getElementById('analyzeButton').addEventListener('click', function() {
+            // Implement analysis functionality here
+            alert('Analyzing your data...');
+    
+            // Get the uploaded image input element
+            var uploadedImageInput = document.getElementById('ecg-upload');
+    
+            // Check if any files are selected
+            if (uploadedImageInput.files.length === 0) {
+                alert('Please upload an image before analyzing.');
+                return;
+            }
+    
+            // Get the uploaded image file
+            var uploadedImageFile = uploadedImageInput.files[0];
+    
+            // Create a FormData object to send the image file
+            var formData = new FormData();
+            formData.append('image', uploadedImageFile);
+    
+            // Send a POST request to the Flask server
+            fetch('/predict', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Display the classification result
+                    displayClassification(data.classification);
+                })
+                .catch(error => {
+                    // Handle errors
+                    console.error('Error analyzing the data:', error);
+                    alert('Error analyzing the data. Please try again later.');
+                });
+        });
+        var linksAppended = {}; // Object to track whether links have been appended
+
+function displayClassification(classification) {
+    // Display the prediction container
+    var predictionContainer = document.querySelector('.prediction');
+    predictionContainer.style.display = 'block';
+
+    // Update the classification content
+    var classificationElement = document.getElementById('classification');
+    classificationElement.textContent = classification;
+
+    // Clear all existing link containers
+    var linkContainers = document.querySelectorAll('.link-container');
+    linkContainers.forEach(container => {
+        container.style.display = 'none'; // Hide all link containers initially
+    });
+
+    // Display the appropriate link based on the classification
+    var containerId;
+    if (classification.toLowerCase() === 'mi') {
+        containerId = 'miLinkContainer';
+    } else if (classification.toLowerCase() === 'abnormal') {
+        containerId = 'abnormalLinkContainer';
+    } else {
+        containerId = 'normalLinkContainer';
+    }
+
+    // Display the link container corresponding to the classification
+    var container = document.getElementById(containerId);
+    container.style.display = 'block';
+}
+
+
+</script>
+
+</body>
+
+</html>
