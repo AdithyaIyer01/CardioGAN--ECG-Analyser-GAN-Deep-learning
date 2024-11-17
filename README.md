@@ -39,62 +39,72 @@ You can only upload images with jpeg or jpg format.
 
 ## Training Your Own Model
 
-If you want to train your own ECG classification model, follow these steps:
+Follow these steps to train your own ECG classification model:
 
-1. **Download DeepFake ECG Images**:
-Run the DEEPFAKE_ECG_DOWNLOADER.ipynb file to download DeepFake ECG images. This notebook will help you collect data to train the model.
+1. **Download DeepFake ECG Images**  
+   Run the `DEEPFAKE_ECG_DOWNLOADER.ipynb` file to download DeepFake ECG images. This notebook will help you collect the data required to train the model.
 
-2. **Separate the ECG Images (Optional)**:
-If you want to split the images (to separate two ECGs from a single DeepFake image), run the ecg-separate.py file. Provide the input and output directory paths when prompted, and the images will be split accordingly.
+2. **Separate the ECG Images (Optional)**  
+   If the downloaded images contain two ECGs in a single image, you can split them using the `ecg-separate.py` file.  
+   - Provide the input and output directory paths when prompted.  
+   - The script will split the combined images into individual ECG images.
 
-3. **Create a Dataset**:
-In the project directory, navigate to the Dataset folder. The folder is already structured with train, test, and valid subfolders. Inside each of these subfolders, you will have abnormal, normal, and mi folders.
+3. **Create a Dataset**  
+   Navigate to the `Dataset` folder in the project directory. This folder is pre-structured with subfolders for training, testing, and validation:  
+   - **train/**: For storing the majority of images used in training.  
+   - **valid/**: For storing a smaller number of images used for validation.  
+   - **test/**: For storing the fewest images used for testing.  
 
-Add the corresponding images to each folder:
-train: Should contain the most images.
-valid: Should have fewer images than the train folder.
-test: Should have the least images.
+   Inside each of these subfolders, you will find subdirectories for the three classes: `abnormal`, `normal`, and `mi`. Add images corresponding to these classes into the respective subdirectories.
 
-4. **Train the Model**:
-Use the ECGConvNet1.ipynb file to train your model. Provide the necessary paths for the dataset folder and other configurations when prompted.
-After training, save your model as an .h5 file.
+4. **Train the Model**  
+   Use the `ECGConvNet1.ipynb` file to train your custom model:  
+   - Update the dataset paths and configurations as needed.  
+   - Train the model using the images in the `Dataset` folder.  
+   - Once training is complete, save the model as an `.h5` file.
 
-5. **Use the Trained Model**:
-Replace the pre-trained convnet2.h5 in app.py with your own saved .h5 model file.
-    model = tf.keras.models.load_model(r'CARDIOGAN_WEBSITE/convnet2.h5')
-When you run the app.py file, the website will use your custom model to classify ECG images.
+5. **Use the Trained Model**  
+   Replace the pre-trained `convnet2.h5` file in the `app.py` script with your custom-trained `.h5` model file:  
+   ```python
+   model = tf.keras.models.load_model(r'CARDIOGAN_WEBSITE/convnet2.h5')
+
 
 ## Folder Structure
 
-/CardioGAN--ECG-Analyser-GAN-Deep-learning
-    ├── CARDIOGAN_WEBSITE/
-    │   ├── app.py
-    │   ├── convnet2.h5  # Pre-trained model file
-    │   ├── templates/
-    │   │   └── home.html
-    ├── ECG_CLASSIFICATION_CODE/
-    │   ├── ECGConvNet1.ipynb  # Model training notebook
-    │   ├── convnet2.h5        # Pre-trained model file
-    │   ├── Dataset/           # Folder containing train, test, valid datasets
-    │   ├── Dataset_training/  # Folder for custom training data
-    │   └── ecg-separate.py    # Script to separate ECG images
-    ├── requirements.txt
-    └── README.md
+1. **CARDIOGAN_WEBSITE/**  
+   This folder contains the main Flask application files:
+   - `app.py`: The Flask application script to run the website.
+   - `templates/`: Contains HTML files for the web application's user interface.
 
-1. CARDIOGAN_WEBSITE/: Contains Flask app (app.py) and templates for the web application.
-2. ECG_CLASSIFICATION_CODE/: Folder containing the model training code (ECGConvNet1.ipynb), the pre-trained model      (convnet2.h5), and dataset-related files.
-3. Dataset/: Folder containing subfolders (train, test, valid) to store ECG images for training and validation.
-4. Dataset_training/: Folder for storing the custom training data (if you want to use your own).
-5. ecg-separate.py: Script to split combined DeepFake ECG images into individual ECGs.
-6. ECGConvNet1.ipynb: Jupyter notebook for training the ECG classification model.
+2. **ECG_CLASSIFICATION_CODE/**  
+   This folder holds the code and resources for ECG classification:
+   - `ECGConvNet1.ipynb`: Jupyter notebook for training the ECG classification model.
+   - `convnet2.h5`: Pre-trained model used for classifying ECG images.
+   - Dataset-related files for training and validation.
+
+3. **Dataset/**  
+   Directory structured into subfolders for organizing ECG images:
+   - `train/`: Contains training images for the model.
+   - `test/`: Holds test images for evaluation.
+   - `valid/`: Contains validation images to fine-tune the model.
+
+4. **Dataset_training/**  
+   This folder is for storing custom training data if you wish to use your own images for training.
+
+5. **ecg-separate.py**  
+   A Python script to process and split combined DeepFake ECG images into individual ECG images.
+
+6. **ECGConvNet1.ipynb**  
+   A Jupyter notebook used to train a custom ECG classification model.
+
 
 ## Screenshots
 
 ![Home Page](Images/Screenshot%202024-06-11%20204453.png)
-1. The home page of CardioGAN website with the upload button.
+1. ## The home page of CardioGAN website with the upload button.
 
 ![Uploaded Image](Images/Screenshot%202024-06-11%20204609.png)
-2. The uploaded image displayed to the user.
+2. ## The uploaded image displayed to the user.
 
 ![ECG Classification](Images/Screenshot%202024-06-11%20204708.png)
-3. The ECG classification of the user-uploaded ECG with links to heart disease prevention websites to refer.
+3. ## The ECG classification of the user-uploaded ECG with links to heart disease prevention websites to refer.
