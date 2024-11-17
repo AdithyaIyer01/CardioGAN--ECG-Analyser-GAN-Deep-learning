@@ -43,7 +43,7 @@ To run the project, follow these steps:
    
   -  Once the server starts, open a browser and go to `http://127.0.0.1:5000/` (or the URL printed in the terminal). 
      You will see a page where you can upload an ECG image of your choice or select one from the `Dataset_Testing` folder.
-     After uploading the image, click on Analyze to get the classification result: Normal, Abnormal, or MI (Myocardial Infarction).
+     After uploading the image, click on **Analyze** to get the classification result: Normal, Abnormal, or MI (Myocardial Infarction).
      
   **Note**:
   
