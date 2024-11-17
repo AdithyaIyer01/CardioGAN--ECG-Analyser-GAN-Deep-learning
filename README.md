@@ -28,18 +28,27 @@
 To run the project, follow these steps:
 
 1. **Go to the CardioGAN Website**:
+   
   - Navigate to the CARDIOGAN_WEBSITE directory:
+    ```bash 
     cd CARDIOGAN_WEBSITE
+    
 2. **Run the Flask App**:
+   
   - Execute the app.py file to start the Flask web application:
+    ```python
     python app.py
-3. Using the Website
-  Once the server starts, open a browser and go to http://127.0.0.1:5000/ (or the URL printed in the terminal). 
-  You will see a page where you can upload an ECG image of your choice or select one from the DATASET folder.
-  After uploading the image, click on Analyze to get the classification result: Normal, Abnormal, or MI (Myocardial Infarction).
-**Note**:
- - The convnet2.h5 model file is already included in the project, so no changes are needed to run the app with the pre-trained model.
- - You can only upload images with jpeg or jpg format.
+    
+3. **Using the Website**:
+   
+  -  Once the server starts, open a browser and go to `http://127.0.0.1:5000/` (or the URL printed in the terminal). 
+     You will see a page where you can upload an ECG image of your choice or select one from the `Dataset_Testing` folder.
+     After uploading the image, click on Analyze to get the classification result: Normal, Abnormal, or MI (Myocardial Infarction).
+     
+  **Note**:
+  
+   - The convnet2.h5 model file is already included in the project, so no changes are needed to run the app with the pre-trained model.
+   - You can only upload images with jpeg or jpg format.
 
 ## Training Your Own Model
 
