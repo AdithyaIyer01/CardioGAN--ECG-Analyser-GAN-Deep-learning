@@ -11,12 +11,12 @@
 ## Installation
 
 1. **Clone the repository**:
-Open Terminal and paste the following.
+- Open Terminal and paste the following.
     git clone https://github.com/AdithyaIyer01/CardioGAN--ECG-Analyser-GAN-Deep-learning
     cd CardioGAN--ECG-Analyser-GAN-Deep-learning
 
 2. **Install the required libraries**: 
-Navigate to the project directory and run the following command to install all dependencies:
+- Navigate to the project directory and run the following command to install all dependencies:
     pip install -r requirements.txt
 
 ## Running the Project
@@ -24,18 +24,18 @@ Navigate to the project directory and run the following command to install all d
 To run the project, follow these steps:
 
 1. **Go to the CardioGAN Website**:
-Navigate to the CARDIOGAN_WEBSITE directory:
+ - Navigate to the CARDIOGAN_WEBSITE directory:
     cd CARDIOGAN_WEBSITE
 2. **Run the Flask App**:
-Execute the app.py file to start the Flask web application:
+ - Execute the app.py file to start the Flask web application:
     python app.py
 3. Using the Website
-Once the server starts, open a browser and go to http://127.0.0.1:5000/ (or the URL printed in the terminal). 
-You will see a page where you can upload an ECG image of your choice or select one from the DATASET folder.
-After uploading the image, click on Analyze to get the classification result: Normal, Abnormal, or MI (Myocardial Infarction).
+  Once the server starts, open a browser and go to http://127.0.0.1:5000/ (or the URL printed in the terminal). 
+  You will see a page where you can upload an ECG image of your choice or select one from the DATASET folder.
+  After uploading the image, click on Analyze to get the classification result: Normal, Abnormal, or MI (Myocardial Infarction).
 **Note**:
-The convnet2.h5 model file is already included in the project, so no changes are needed to run the app with the pre-trained model.
-You can only upload images with jpeg or jpg format.
+ - The convnet2.h5 model file is already included in the project, so no changes are needed to run the app with the pre-trained model.
+ - You can only upload images with jpeg or jpg format.
 
 ## Training Your Own Model
 
@@ -101,10 +101,10 @@ Follow these steps to train your own ECG classification model:
 ## Screenshots
 
 ![Home Page](Images/Screenshot%202024-06-11%20204453.png)
-1. ## The home page of CardioGAN website with the upload button.
+1. ** The home page of CardioGAN website with the upload button.**
 
 ![Uploaded Image](Images/Screenshot%202024-06-11%20204609.png)
-2. ## The uploaded image displayed to the user.
+2. ** The uploaded image displayed to the user.**
 
 ![ECG Classification](Images/Screenshot%202024-06-11%20204708.png)
-3. ## The ECG classification of the user-uploaded ECG with links to heart disease prevention websites to refer.
+3. ** The ECG classification of the user-uploaded ECG with links to heart disease prevention websites to refer.**
